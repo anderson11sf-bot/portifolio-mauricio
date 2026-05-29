@@ -115,6 +115,31 @@ export default function Home({ onSelectPhoto, photos }) {
             scrub: true
           }
         });
+
+        // GATILHO DE CENTRO DA TELA PARA AS OUTRAS FOTOS DA HOME (MOBILE)
+        // 1. Retrato do Hero
+        ScrollTrigger.create({
+          trigger: '.hero-portrait-box',
+          start: 'top 62%',
+          end: 'bottom 38%',
+          toggleClass: { targets: '.hero-portrait-box', className: 'is-centered' }
+        });
+
+        // 2. Imagem de Serviços 1
+        ScrollTrigger.create({
+          trigger: '.service-image-box',
+          start: 'top 62%',
+          end: 'bottom 38%',
+          toggleClass: { targets: '.service-image-box', className: 'is-centered' }
+        });
+
+        // 3. Imagem de Serviços 2 (Moldura Flutuante)
+        ScrollTrigger.create({
+          trigger: '.service-image-box-float',
+          start: 'top 62%',
+          end: 'bottom 38%',
+          toggleClass: { targets: '.service-image-box-float', className: 'is-centered' }
+        });
       }
     });
 
@@ -550,6 +575,11 @@ export default function Home({ onSelectPhoto, photos }) {
           filter: grayscale(0%) contrast(1.05); /* Ganha cor no hover */
         }
 
+        /* Suporte a acender no mobile quando centralizado */
+        .hero-portrait-box.is-centered .hero-portrait-img {
+          filter: grayscale(0%) contrast(1.05); /* Ganha cor no mobile */
+        }
+
         /* Estilo para Metadata do Hero */
         .hero-meta {
           position: absolute;
@@ -565,22 +595,24 @@ export default function Home({ onSelectPhoto, photos }) {
           will-change: opacity, transform;
         }
 
-        .hero-meta.top-left {
-          top: 50%;
-          transform: translateY(-50%);
-          left: var(--space-md);
-        }
+        @media (min-width: 769px) {
+          .hero-meta.top-left {
+            top: 50%;
+            transform: translateY(-50%);
+            left: var(--space-md);
+          }
 
-        .hero-meta.top-right {
-          top: 50%;
-          transform: translateY(-50%);
-          right: var(--space-md);
-          align-items: flex-end;
-        }
+          .hero-meta.top-right {
+            top: 50%;
+            transform: translateY(-50%);
+            right: var(--space-md);
+            align-items: flex-end;
+          }
 
-        .hero-meta.bottom-left {
-          bottom: var(--space-md);
-          left: var(--space-md);
+          .hero-meta.bottom-left {
+            bottom: var(--space-md);
+            left: var(--space-md);
+          }
         }
 
         .hero-meta span {
@@ -648,7 +680,7 @@ export default function Home({ onSelectPhoto, photos }) {
           .hero-center-portrait {
             width: 60vw;
             min-width: 200px;
-            margin-top: -20px;
+            margin-top: 0; /* Centralização limpa no centro vertical */
           }
 
           .hero-split-title {
@@ -657,90 +689,99 @@ export default function Home({ onSelectPhoto, photos }) {
 
           .hero-title-container {
             padding: var(--space-sm) var(--space-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centraliza a caixa de títulos */
+            align-items: center;
+            height: 100%;
           }
 
-          /* Aproxima os títulos verticalmente do centro do retrato no mobile para evitar dispersão e overlaps */
+          /* Títulos fixos e estáveis em relação ao centro vertical (50% do viewport) */
           .hero-split-title.top-title {
-            margin-top: calc(50vh - 130px) !important;
+            margin-top: 0 !important;
+            position: absolute;
+            top: calc(50% - 175px);
+            left: var(--space-sm);
             align-self: flex-start;
           }
 
           .hero-split-title.bottom-title {
-            margin-bottom: calc(50vh - 130px) !important;
+            margin-bottom: 0 !important;
+            position: absolute;
+            bottom: calc(50% - 175px);
+            right: var(--space-sm);
             align-self: flex-end;
           }
 
           /* Estilização e posicionamento das descrições restauradas nas laterais livres no mobile */
           .hero-meta {
-            font-size: 8px !important;
+            font-size: 8.5px;
             letter-spacing: 0.1em;
-            display: flex !important; /* Força exibição integral */
+            display: flex;
             flex-direction: column;
             position: absolute;
             z-index: 6;
           }
 
           .hero-meta.top-left {
-            top: calc(var(--header-height) + 15px) !important;
-            left: var(--space-sm) !important;
-            bottom: auto !important;
-            transform: none !important;
-            align-items: flex-start !important;
-            text-align: left !important;
-            width: auto !important;
+            top: calc(var(--header-height) + 15px);
+            left: var(--space-sm);
+            bottom: auto;
+            align-items: flex-start;
+            text-align: left;
+            width: auto;
             gap: 4px;
           }
 
           .hero-meta.top-left .meta-brand {
-            font-size: 9px;
+            font-size: 9.5px;
             color: #FFFFFF;
             font-weight: 600;
             letter-spacing: 0.12em;
           }
 
           .hero-meta.top-left .meta-title {
-            display: block !important;
-            font-size: 9px;
+            display: block;
+            font-size: 9.5px;
             font-weight: 400;
             color: var(--red-bright);
             letter-spacing: 0.1em;
           }
 
           .hero-meta.top-left .meta-subtitle {
-            font-size: 8px;
-            color: #707070;
+            font-size: 8.5px;
+            color: #aaaaaa;
             letter-spacing: 0.08em;
           }
 
           .hero-meta.top-right {
-            top: calc(var(--header-height) + 15px) !important;
-            right: var(--space-sm) !important;
-            bottom: auto !important;
-            transform: none !important;
-            align-items: flex-end !important;
-            text-align: right !important;
-            display: flex !important;
+            top: calc(var(--header-height) + 15px);
+            right: var(--space-sm);
+            bottom: auto;
+            align-items: flex-end;
+            text-align: right;
+            display: flex;
             gap: 4px;
-            width: auto !important;
+            width: auto;
           }
 
           .hero-meta.top-right .meta-item {
-            font-size: 9px;
+            font-size: 9.5px;
             color: #FFFFFF;
             letter-spacing: 0.1em;
           }
 
           .hero-meta.bottom-left {
-            bottom: 25px !important;
-            left: var(--space-sm) !important;
-            display: flex !important;
+            bottom: 25px;
+            left: var(--space-sm);
+            display: flex;
             gap: 4px;
-            width: auto !important;
-            align-items: flex-start !important;
+            width: auto;
+            align-items: flex-start;
           }
 
           .hero-meta.bottom-left .meta-desc {
-            font-size: 7.5px;
+            font-size: 8px;
             color: #888888;
             letter-spacing: 0.05em;
           }
@@ -749,14 +790,13 @@ export default function Home({ onSelectPhoto, photos }) {
           .hero-scroll-indicator {
             position: absolute;
             bottom: 25px;
-            right: var(--space-sm) !important;
-            left: auto !important;
-            transform: none !important;
-            display: flex !important;
+            right: var(--space-sm);
+            left: auto;
+            display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            font-size: 8px;
+            font-size: 8.5px;
             letter-spacing: 0.12em;
             color: #707070;
             white-space: nowrap;
@@ -822,6 +862,10 @@ export default function Home({ onSelectPhoto, photos }) {
 
         .col-center-10 {
           grid-column: 2 / 12;
+        }
+
+        .col-center-8 {
+          grid-column: 3 / 11;
         }
 
         .col-right-6 {
@@ -1031,7 +1075,8 @@ export default function Home({ onSelectPhoto, photos }) {
           transition: filter 0.8s var(--transition-smooth);
         }
 
-        .service-image-box:hover .service-image-parallax {
+        .service-image-box:hover .service-image-parallax,
+        .service-image-box.is-centered .service-image-parallax {
           filter: grayscale(0%) contrast(1.05);
         }
 
@@ -1057,7 +1102,8 @@ export default function Home({ onSelectPhoto, photos }) {
           border: 1px solid rgba(0, 0, 0, 0.3);
         }
 
-        .service-image-box-float:hover .service-image-float {
+        .service-image-box-float:hover .service-image-float,
+        .service-image-box-float.is-centered .service-image-float {
           filter: grayscale(0%) contrast(1.05);
         }
 

@@ -19,6 +19,7 @@ export default function PhotoDetail({ photo, onBack }) {
 
     const details = detailsRef.current;
     const images = stackRef.current?.querySelectorAll('.photo-detail__img-box-wrapper');
+    const imageBoxes = stackRef.current?.querySelectorAll('.photo-detail__img-box');
     
     // Configurar o estado inicial das imagens para revelação
     gsap.set(images, { opacity: 0, y: 50 });
@@ -65,9 +66,26 @@ export default function PhotoDetail({ photo, onBack }) {
       });
     }
 
+    // GATILHO DE ACENDER FOTOS NO MOBILE (CENTRO DA TELA)
+    const mm = gsap.matchMedia();
+    mm.add("(max-width: 1024px)", () => {
+      if (imageBoxes) {
+        imageBoxes.forEach((box) => {
+          const trigger = ScrollTrigger.create({
+            trigger: box,
+            start: "top 62%",
+            end: "bottom 38%",
+            toggleClass: { targets: box, className: "is-centered" }
+          });
+          triggers.push(trigger);
+        });
+      }
+    });
+
     return () => {
       tl.kill();
       triggers.forEach(t => t.kill());
+      mm.revert();
     };
   }, [photo]);
 
@@ -295,8 +313,9 @@ export default function PhotoDetail({ photo, onBack }) {
           transition: filter 0.8s var(--transition-smooth);
         }
 
-        .photo-detail__img-box:hover .photo-detail__img {
-          filter: grayscale(0%) contrast(1.05); /* Revela cores no hover */
+        .photo-detail__img-box:hover .photo-detail__img,
+        .photo-detail__img-box.is-centered .photo-detail__img {
+          filter: grayscale(0%) contrast(1.05); /* Revela cores no hover ou centro */
         }
 
         .photo-detail__img-caption {
