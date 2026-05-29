@@ -84,9 +84,9 @@ export default function Home({ onSelectPhoto, photos }) {
           }
         });
       } else {
-        // Mobile: Parallax Horizontal Sutil (Sem cortar as letras e mantendo dinamismo!)
+        // Mobile: Parallax Horizontal - Títulos vão para os cantos da tela ao rolar o scroll!
         gsap.to('.top-title', {
-          xPercent: -7,
+          xPercent: -30, // Desloca para a esquerda (canto da tela)
           scrollTrigger: {
             trigger: '.hero-split',
             start: 'top top',
@@ -96,7 +96,7 @@ export default function Home({ onSelectPhoto, photos }) {
         });
 
         gsap.to('.bottom-title', {
-          xPercent: 7,
+          xPercent: 30, // Desloca para a direita (canto da tela)
           scrollTrigger: {
             trigger: '.hero-split',
             start: 'top top',
@@ -105,9 +105,10 @@ export default function Home({ onSelectPhoto, photos }) {
           }
         });
 
-        // Mobile: Parallax Vertical muito suave e estável (sem escala para evitar GPU stutters)
+        // Mobile: A foto diminui de tamanho (scale) à medida que rola!
         gsap.to('.hero-center-portrait', {
-          yPercent: 6,
+          scale: 0.8, // Retrato do fotógrafo diminui suavemente
+          yPercent: 4,
           scrollTrigger: {
             trigger: '.hero-split',
             start: 'top top',
@@ -678,8 +679,8 @@ export default function Home({ onSelectPhoto, photos }) {
 
         @media (max-width: 768px) {
           .hero-center-portrait {
-            width: 60vw;
-            min-width: 200px;
+            width: 75vw;
+            min-width: 240px;
             margin-top: 0; /* Centralização limpa no centro vertical */
           }
 
