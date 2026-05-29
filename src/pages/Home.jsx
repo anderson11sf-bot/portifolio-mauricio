@@ -44,39 +44,78 @@ export default function Home({ onSelectPhoto, photos }) {
     );
 
     // 2. Parallax de Scroll Responsivo (GSAP matchMedia)
-    mm.add("(min-width: 769px)", () => {
-      // Parallax Horizontal Sutil no Desktop (Sem cortar as letras e mantendo legibilidade)
-      gsap.to('.top-title', {
-        xPercent: -12,
-        scrollTrigger: {
-          trigger: '.hero-split',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true
-        }
-      });
+    mm.add({
+      isDesktop: "(min-width: 769px)",
+      isMobile: "(max-width: 768px)"
+    }, (context) => {
+      const { isDesktop } = context.conditions;
 
-      gsap.to('.bottom-title', {
-        xPercent: 12,
-        scrollTrigger: {
-          trigger: '.hero-split',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true
-        }
-      });
+      if (isDesktop) {
+        // Desktop: Parallax Horizontal Sutil de 12%
+        gsap.to('.top-title', {
+          xPercent: -12,
+          scrollTrigger: {
+            trigger: '.hero-split',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true
+          }
+        });
 
-      // Parallax Vertical da Foto Central & Escala (Somente no Desktop para evitar stutters e overlaps no mobile)
-      gsap.to('.hero-center-portrait', {
-        yPercent: 15,
-        scale: 0.95,
-        scrollTrigger: {
-          trigger: '.hero-split',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true
-        }
-      });
+        gsap.to('.bottom-title', {
+          xPercent: 12,
+          scrollTrigger: {
+            trigger: '.hero-split',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true
+          }
+        });
+
+        // Desktop: Parallax Vertical de 15% e Escala
+        gsap.to('.hero-center-portrait', {
+          yPercent: 15,
+          scale: 0.95,
+          scrollTrigger: {
+            trigger: '.hero-split',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true
+          }
+        });
+      } else {
+        // Mobile: Parallax Horizontal Sutil (Sem cortar as letras e mantendo dinamismo!)
+        gsap.to('.top-title', {
+          xPercent: -7,
+          scrollTrigger: {
+            trigger: '.hero-split',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true
+          }
+        });
+
+        gsap.to('.bottom-title', {
+          xPercent: 7,
+          scrollTrigger: {
+            trigger: '.hero-split',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true
+          }
+        });
+
+        // Mobile: Parallax Vertical muito suave e estável (sem escala para evitar GPU stutters)
+        gsap.to('.hero-center-portrait', {
+          yPercent: 6,
+          scrollTrigger: {
+            trigger: '.hero-split',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true
+          }
+        });
+      }
     });
 
     // Animações para as novas Seções de Landing Page Fullscreen
@@ -620,54 +659,100 @@ export default function Home({ onSelectPhoto, photos }) {
             padding: var(--space-sm) var(--space-sm);
           }
 
+          /* Aproxima os títulos verticalmente do centro do retrato no mobile para evitar dispersão e overlaps */
           .hero-split-title.top-title {
-            margin-top: calc(var(--header-height) + 20px) !important;
+            margin-top: calc(50vh - 130px) !important;
+            align-self: flex-start;
           }
 
           .hero-split-title.bottom-title {
-            margin-bottom: 40px !important;
+            margin-bottom: calc(50vh - 130px) !important;
+            align-self: flex-end;
           }
 
-          /* Otimização da Descrição do Começo no Mobile (Prevenido overlaps e stutters) */
-          .hero-meta.top-left {
+          /* Estilização e posicionamento das descrições restauradas nas laterais livres no mobile */
+          .hero-meta {
+            font-size: 8px !important;
+            letter-spacing: 0.1em;
+            display: flex !important; /* Força exibição integral */
+            flex-direction: column;
             position: absolute;
-            top: auto;
-            bottom: 60px;
-            left: 50%;
-            transform: translateX(-50%) !important;
-            align-items: center;
-            text-align: center;
-            width: 90%;
-            gap: 4px;
             z-index: 6;
           }
 
+          .hero-meta.top-left {
+            top: calc(var(--header-height) + 15px) !important;
+            left: var(--space-sm) !important;
+            bottom: auto !important;
+            transform: none !important;
+            align-items: flex-start !important;
+            text-align: left !important;
+            width: auto !important;
+            gap: 4px;
+          }
+
           .hero-meta.top-left .meta-brand {
-            font-size: 10px;
+            font-size: 9px;
             color: #FFFFFF;
-            letter-spacing: 0.15em;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+          }
+
+          .hero-meta.top-left .meta-title {
+            display: block !important;
+            font-size: 9px;
+            font-weight: 400;
+            color: var(--red-bright);
+            letter-spacing: 0.1em;
           }
 
           .hero-meta.top-left .meta-subtitle {
             font-size: 8px;
-            color: var(--color-muted);
+            color: #707070;
+            letter-spacing: 0.08em;
+          }
+
+          .hero-meta.top-right {
+            top: calc(var(--header-height) + 15px) !important;
+            right: var(--space-sm) !important;
+            bottom: auto !important;
+            transform: none !important;
+            align-items: flex-end !important;
+            text-align: right !important;
+            display: flex !important;
+            gap: 4px;
+            width: auto !important;
+          }
+
+          .hero-meta.top-right .meta-item {
+            font-size: 9px;
+            color: #FFFFFF;
             letter-spacing: 0.1em;
           }
 
-          /* Ocultar elementos redundantes no mobile para evitar sobreposições e poluição */
-          .hero-meta.top-left .meta-title,
-          .hero-meta.top-right,
           .hero-meta.bottom-left {
-            display: none !important;
+            bottom: 25px !important;
+            left: var(--space-sm) !important;
+            display: flex !important;
+            gap: 4px;
+            width: auto !important;
+            align-items: flex-start !important;
           }
 
-          /* Centralizar e estilizar o indicador de scroll no mobile */
+          .hero-meta.bottom-left .meta-desc {
+            font-size: 7.5px;
+            color: #888888;
+            letter-spacing: 0.05em;
+          }
+
+          /* Indicador de scroll centralizado e legível no mobile */
           .hero-scroll-indicator {
             position: absolute;
             bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%) !important;
-            display: flex;
+            right: var(--space-sm) !important;
+            left: auto !important;
+            transform: none !important;
+            display: flex !important;
             align-items: center;
             justify-content: center;
             gap: 8px;
@@ -1067,7 +1152,7 @@ export default function Home({ onSelectPhoto, photos }) {
         }
 
         @media (max-width: 1024px) {
-          .col-left-5, .col-center-10, .col-right-6, .col-left-4 {
+          .col-left-5, .col-center-10, .col-center-8, .col-right-6, .col-left-4 {
             grid-column: 1 / -1; /* Stack total de colunas para scroll natural no tablet/mobile */
           }
 
