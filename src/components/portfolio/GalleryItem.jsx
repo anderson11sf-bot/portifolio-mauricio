@@ -44,6 +44,14 @@ export default function GalleryItem({ id, title, year, category, aspect = 'portr
       } else {
         // Garantir reset total em telas menores
         gsap.set(img, { yPercent: 0 });
+
+        // GATILHO DE CENTRO DA TELA (MOBILE): Acende a foto quando estiver centralizada no viewport
+        ScrollTrigger.create({
+          trigger: container,
+          start: "top 62%",     // Começa a acender quando o topo da imagem atinge 62% da altura da tela
+          end: "bottom 38%",   // Volta a ficar cinza quando a base da imagem passa de 38% da altura da tela
+          toggleClass: { targets: container, className: "is-centered" }
+        });
       }
     });
 
@@ -162,13 +170,15 @@ export default function GalleryItem({ id, title, year, category, aspect = 'portr
           background: linear-gradient(180deg, #181818 0%, #0c0c0c 100%);
         }
 
-        /* Hover: A fotografia ganha vida com uma sutil restauração cromática ou suavização */
-        .gallery-item:hover .gallery-item__img {
+         /* Hover & Mobile Scroll Center: A fotografia ganha vida com uma restauração cromática */
+        .gallery-item:hover .gallery-item__img,
+        .gallery-item.is-centered .gallery-item__img {
           filter: grayscale(0%) contrast(1.05);
         }
 
-        /* Efeito de Escala suave do Wrapper no Hover */
-        .gallery-item:hover .gallery-item__wrapper {
+        /* Efeito de Escala suave do Wrapper no Hover & Scroll Center */
+        .gallery-item:hover .gallery-item__wrapper,
+        .gallery-item.is-centered .gallery-item__wrapper {
           transform: scale(1.01);
           transition: transform 1.2s var(--transition-smooth);
         }
@@ -192,7 +202,8 @@ export default function GalleryItem({ id, title, year, category, aspect = 'portr
           pointer-events: none;
         }
 
-        .gallery-item:hover .gallery-item__info {
+        .gallery-item:hover .gallery-item__info,
+        .gallery-item.is-centered .gallery-item__info {
           opacity: 1;
           transform: translateY(0);
         }

@@ -65,18 +65,18 @@ export default function Home({ onSelectPhoto, photos }) {
           scrub: true
         }
       });
-    });
 
-    // Parallax Vertical da Foto Central (Ativo em Desktop e Mobile)
-    gsap.to('.hero-center-portrait', {
-      yPercent: 15,
-      scale: 0.95,
-      scrollTrigger: {
-        trigger: '.hero-split',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true
-      }
+      // Parallax Vertical da Foto Central & Escala (Somente no Desktop para evitar stutters e overlaps no mobile)
+      gsap.to('.hero-center-portrait', {
+        yPercent: 15,
+        scale: 0.95,
+        scrollTrigger: {
+          trigger: '.hero-split',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
     });
 
     // Animações para as novas Seções de Landing Page Fullscreen
@@ -628,46 +628,58 @@ export default function Home({ onSelectPhoto, photos }) {
             margin-bottom: 40px !important;
           }
 
-          .hero-meta {
-            font-size: 8px !important; /* Mais compacto para mobile */
-            letter-spacing: 0.1em;
-          }
-
+          /* Otimização da Descrição do Começo no Mobile (Prevenido overlaps e stutters) */
           .hero-meta.top-left {
             position: absolute;
             top: auto;
-            bottom: 70px;
-            left: var(--space-sm);
-            transform: none;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%) !important;
+            align-items: center;
+            text-align: center;
+            width: 90%;
             gap: 4px;
+            z-index: 6;
           }
 
-          .hero-meta.top-right {
-            position: absolute;
-            top: auto;
-            bottom: 70px;
-            right: var(--space-sm);
-            transform: none;
-            align-items: flex-end;
-            gap: 4px;
+          .hero-meta.top-left .meta-brand {
+            font-size: 10px;
+            color: #FFFFFF;
+            letter-spacing: 0.15em;
           }
 
+          .hero-meta.top-left .meta-subtitle {
+            font-size: 8px;
+            color: var(--color-muted);
+            letter-spacing: 0.1em;
+          }
+
+          /* Ocultar elementos redundantes no mobile para evitar sobreposições e poluição */
+          .hero-meta.top-left .meta-title,
+          .hero-meta.top-right,
           .hero-meta.bottom-left {
-            position: absolute;
-            bottom: 25px;
-            left: var(--space-sm);
-            gap: 4px;
+            display: none !important;
           }
 
+          /* Centralizar e estilizar o indicador de scroll no mobile */
           .hero-scroll-indicator {
             position: absolute;
             bottom: 25px;
-            right: var(--space-sm);
-            font-size: 8px;
-            letter-spacing: 0.1em;
-            gap: 8px;
+            left: 50%;
+            transform: translateX(-50%) !important;
             display: flex;
             align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 8px;
+            letter-spacing: 0.12em;
+            color: #707070;
+            white-space: nowrap;
+            z-index: 6;
+          }
+
+          .scroll-indicator-line {
+            display: none; /* Oculta a linha longa no mobile */
           }
         }
 
