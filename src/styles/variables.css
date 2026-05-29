@@ -1,0 +1,72 @@
+/* 
+  Quiet Luxury Design System Variables
+  Portfólio de Fotografia & Quadros Fine Art
+*/
+
+:root {
+  /* --- PALETA DE CORES (PRETO & VERMELHO JAPONÊS MINIMALISTA) --- */
+  --bg-dark: #050505;          /* Laca Japonesa Negra (Preto profundo brilhante) */
+  --bg-light: #F9F8F6;         /* Alabaster Washi Paper (Textura de papel arroz claro) */
+  --fg-dark: #FFFFFF;          /* Texto claro */
+  --fg-light: #0A0A0A;         /* Texto escuro */
+  
+  /* Tons de Vermelho Carmim (Silent Japan Aesthetic) */
+  --red-deep: #3C0A0A;         /* Vermelho Laca Escuríssimo */
+  --red-medium: #7A1212;       /* Vermelho Carmim Imperial */
+  --red-bright: #B51A1A;       /* Vermelho Sol Nascente */
+  
+  --color-muted-dark: #8F8F8F;  /* Cinza neutro suave */
+  --color-muted-light: #7A7A7A;
+  
+  --border-dark: rgba(181, 26, 26, 0.12); /* Linhas finas em tom carmim sutil */
+  --border-light: rgba(0, 0, 0, 0.06);
+  
+  /* Chaves dinâmicas que mudam conforme o tema */
+  --color-bg: var(--bg-dark);
+  --color-fg: var(--fg-dark);
+  --color-muted: var(--color-muted-dark);
+  --color-border: var(--border-dark);
+  --color-accent: var(--red-medium);
+  --color-accent-bright: var(--red-bright);
+  --color-accent-deep: var(--red-deep);
+
+  /* --- TIPOGRAFIA COMBINADA (QUIET LUXURY) --- */
+  /* Serifa dramática de alto contraste para grandes títulos */
+  --font-serif: 'Bodoni Moda', 'Playfair Display', 'Bodoni MT', serif;
+  /* Sans-serif minimalista geométrica para textos de apoio, menus e UI */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Neue Haas Grotesk', sans-serif;
+
+  /* --- TIPOGRAFIA FLUIDA (FLUID TYPOGRAPHY) --- */
+  /* Fórmulas clamp baseadas em viewports para escalonamento automático sem quebras de layout */
+  --fs-hero: clamp(2.8rem, 7.5vw + 0.8rem, 10.5rem);       /* Títulos cinematográficos gigantes */
+  --fs-h1: clamp(2.2rem, 5vw + 0.5rem, 6rem);             /* Títulos secundários / Cabeçalhos de seção */
+  --fs-h2: clamp(1.6rem, 3vw + 0.4rem, 3.8rem);             /* Títulos de obras / Galeria */
+  --fs-h3: clamp(1.2rem, 1.8vw + 0.3rem, 2.2rem);           /* Títulos de painéis / Menus médios */
+  --fs-body: clamp(0.9rem, 0.22vw + 0.8rem, 1.05rem);       /* Texto corrido / Manifesto */
+  --fs-ui: clamp(0.72rem, 0.1vw + 0.68rem, 0.82rem);        /* UI, Metadados, Botões, Legendas */
+
+  /* --- HIERARQUIA DE ESPAÇAMENTO RESPONSIVO (SPACING) --- */
+  --space-xs: clamp(0.5rem, 0.8vw, 1rem);
+  --space-sm: clamp(1rem, 1.5vw, 2rem);
+  --space-md: clamp(2rem, 3vw, 4rem);
+  --space-lg: clamp(4rem, 6vw, 8rem);
+  --space-xl: clamp(8rem, 12vw, 16rem);
+
+  /* --- TRANSITIONS --- */
+  --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1); /* Curva de velocidade premium (Expo Out) */
+  --duration-normal: 0.6s;
+  --duration-slow: 1.2s;
+  
+  /* --- ESTRUTURA --- */
+  --header-height: 80px;
+  --sidebar-width: 480px; /* Largura do off-canvas de compra */
+  --cursor-size: 8px;     /* Tamanho padrão do dot do cursor */
+}
+
+/* Tema Claro Opcional (ativado por classe .theme-light) */
+.theme-light {
+  --color-bg: var(--bg-light);
+  --color-fg: var(--fg-light);
+  --color-muted: var(--color-muted-light);
+  --color-border: var(--border-light);
+}

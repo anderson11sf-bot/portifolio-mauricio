@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Inter:wght@200;300;400;500;600&display=swap');
+@import './variables.css';
+
+/* --- MODERN RESET & BASE --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  background-color: var(--bg-dark); /* Evita flash branco antes do load */
+  scroll-behavior: auto; /* Necessário para Lenis/Locomotive funcionar corretamente */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  color: var(--color-fg);
+  background-color: transparent; /* Transparente para permitir a visualização do vídeo de fundo */
+  line-height: 1.5;
+  overflow-x: hidden;
+  transition: background-color var(--duration-normal) var(--transition-smooth),
+              color var(--duration-normal) var(--transition-smooth);
+}
+
+/* Ocultar scrollbar mantendo a funcionalidade de scroll nativa */
+::-webkit-scrollbar {
+  display: none;
+}
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* --- ELEMENTOS DE TIPOGRAFIA --- */
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+p, span, a, button, .font-sans {
+  font-family: var(--font-sans);
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* --- CLASSES CONCEITUAIS DE LUXO (Awwwards Style) --- */
+
+/* Grid Dramático de Colunas Proporcionais */
+.grid-luxury {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-md);
+  width: 100%;
+  max-width: 100%;
+  padding-left: var(--space-md);
+  padding-right: var(--space-md);
+}
+
+@media (max-width: 1024px) {
+  .grid-luxury {
+    grid-template-columns: repeat(8, 1fr);
+    gap: var(--space-sm);
+    padding-left: var(--space-sm);
+    padding-right: var(--space-sm);
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-luxury {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-sm);
+  }
+}
+
+/* Proporções estritas de imagens P&B de galeria */
+.aspect-portrait {
+  aspect-ratio: 3 / 4;
+  position: relative;
+  overflow: hidden;
+  background-color: #121212; /* Cor de placeholder sofisticado */
+}
+
+.aspect-landscape {
+  aspect-ratio: 16 / 9;
+  position: relative;
+  overflow: hidden;
+  background-color: #121212;
+}
+
+.aspect-square {
+  aspect-ratio: 1 / 1;
+  position: relative;
+  overflow: hidden;
+  background-color: #121212;
+}
+
+/* Efeito de revelação e escala suave de imagens */
+.image-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-parallax {
+  width: 100%;
+  height: 120%; /* Sobra de espaço para scroll parallax sutil */
+  object-fit: cover;
+  position: absolute;
+  top: -10%;
+  left: 0;
+  will-change: transform;
+  filter: grayscale(100%) contrast(1.1); /* P&B dramático */
+  transition: filter var(--duration-normal) var(--transition-smooth);
+}
+
+/* Hover suave nas imagens Fine Art */
+.image-wrapper:hover .image-parallax {
+  filter: grayscale(0%) contrast(1.05); /* Ganha vida sutilmente ao passar o mouse */
+}
+
+/* Mascaramento de Texto Cinematográfico (Preloader / Hero) */
+.char-mask {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.char-inner {
+  display: inline-block;
+  transform: translateY(100%);
+  will-change: transform;
+}
+
+/* Botões Minimalistas de Luxo */
+.btn-luxury {
+  font-size: var(--fs-ui);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 0.8rem 1.6rem;
+  border: 1px solid var(--color-border);
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color var(--duration-normal) var(--transition-smooth);
+}
+
+.btn-luxury::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-fg);
+  transform: translateY(100%);
+  transition: transform var(--duration-normal) var(--transition-smooth);
+  z-index: -1;
+}
+
+.btn-luxury:hover {
+  color: var(--color-bg);
+}
+
+.btn-luxury:hover::before {
+  transform: translateY(0);
+}
+
+/* Suporte de Smooth Scroll Lenis */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis-scrolling iframe {
+  pointer-events: none;
+}
